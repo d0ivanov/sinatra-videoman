@@ -1,3 +1,23 @@
+require 'digest/sha1'
+
 class VideoUploader < CarrierWave::Uploader::Base
-    storage :video
+  include Sinatra::Videoman
+
+  storage :file
+
+
+  def store_dir
+    Manager.config[:upload_dir]
+  end
+
+  def extension_white_list
+    Manager.config[:file_extensions]
+  end
+
+  def filename
+    if original_filename
+      @name ||= Digest::MD5.hexdigest(File.dirname(current_path))
+      "#{@name}.#{file.extension}"
+    end
+  end
 end

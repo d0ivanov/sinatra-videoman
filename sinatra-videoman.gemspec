@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Sinatra::Videoman::VERSION
   spec.authors       = ["Dobromir Ivanov"]
   spec.email         = ["dobromir0ivanov@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Sinatra video manager}
+  spec.summary       = %q{Sinatra video manager}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -22,6 +22,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
 
 	spec.add_runtime_dependency "sinatra"
-	spec.add_runtime_dependency "sinatra-activerecord"
+	spec.add_runtime_dependency "activerecord"
 	spec.add_runtime_dependency "protected_attributes"
+  spec.add_runtime_dependency "bcrypt-ruby"
+  spec.add_runtime_dependency "carrierwave"
 end

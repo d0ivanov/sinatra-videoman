@@ -8,38 +8,59 @@ module Sinatra
       end
 
       post '/videos/upload' do
-        video = Video.new(params)
-        if video.valid?
-          video.save
-          flash[:notice] = "Successfully uploaded video!"
+        video_upload = Video.new(params)
+        video_upload.video = params[:video]
+        if video_upload.valid?
+          video_upload.save!
+          Manager.call :after_upload, [video_upload, request, response]
+          flash[:notice] = Manager._after_upload_msg
+          redirect Manager._after_upload_path
         else
-          flash[:error] = video.errors.messages
-          redirect '/videos/upload'
+          Manager.call :after_upload_failure, [request, response]
+          flash[:error] = Manager._after_upload_failure_msg
+          redirect Manager._after_upload_failure_path
         end
       end
 
       get '/videos/show/:id/?' do
+        @video = Video.find(params[:id])
         erb :show
       end
 
       get '/videos/edit/:id/?' do
+        @video = Video.find(params[:id])
         erb :edit
       end
 
       post '/videos/edit/:id' do
-        video = Video.find(params["id"])
+        video = Video.find(params[:id])
         video.update_atributes(params)
-        video.save
-        Manager.call :after_update, video
+        if video.valid?
+          video.save
+          Manager.call :after_update, [video, request, response]
+          flash[:notice] = Manager._after_update_msg
+          redirect Manager._after_update_path
+        else
+          Manager.call :after_update_failure, [video, request, response]
+          flash[:error] = Manager._after_update_failure_msg
+          redirect Manager._after_update_failure_path
+        end
       end
 
-      post 'videos/delete/:id' do
-        video = Video.find(params["id"])
-        Manager.call :before_delete, video
-        video.delete
+      post '/videos/delete/:id' do
+        video = Video.find(params[:id])
+        Manager.call :before_delete, [video, request, response]
+        if video
+          video.video.remove!
+          video.delete
+          Manager.call :after_delete, [request, response]
+          flash[:notice] = Manager._after_delete_msg
+        end
+        redirect Manager._after_delete_path
       end
 
       get '/videos' do
+        @videos = Video.all
         erb :index
       end
     end

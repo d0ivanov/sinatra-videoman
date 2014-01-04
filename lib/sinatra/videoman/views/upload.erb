@@ -1,8 +1,9 @@
 <%= flash[:error] %>
 <%= flash[:notice] %>
 <form enctype="multipart/form-data" method="post" action="/videos/upload">
-  <input type="file" name="video" /> <br />
-  <input type="text" name="title" /><br />
-  <input type="text" name="tags" /> <br />
-  <input type="submit" value="Upload" /> <br />
+  <p>Video: <input type="file" name="video" /></p>
+  <p>Title: <input type="text" name="title" /></p>
+  <p>Description: <input type="text" name="description" /></p>
+  <p>Tags: <input type="text" name="tags" /></p>
+  <input type="submit" value="Upload" />
 </form>
