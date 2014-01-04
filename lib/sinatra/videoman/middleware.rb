@@ -59,7 +59,7 @@ module Sinatra
         redirect Manager._after_delete_path
       end
 
-      get '/videos' do
+      get '/videos/' do
         @videos = Video.all
         erb :index
       end
