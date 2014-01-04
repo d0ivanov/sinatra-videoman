@@ -1,6 +1,7 @@
 module Sinatra
   module Videoman
-    class MiddleWare < Sinatra::Base
+    class Middleware < Sinatra::Base
+      include Manager
 
       get '/videos/upload/?' do
         erb :upload
@@ -12,7 +13,7 @@ module Sinatra
           video.save
           flash[:notice] = "Successfully uploaded video!"
         else
-          flash[:notice] = video.errors.messages
+          flash[:error] = video.errors.messages
           redirect '/videos/upload'
         end
       end
@@ -41,5 +42,6 @@ module Sinatra
       get '/videos' do
         erb :index
       end
+    end
   end
 end

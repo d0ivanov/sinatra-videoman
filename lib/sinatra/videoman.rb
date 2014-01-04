@@ -2,14 +2,17 @@ require "sinatra/videoman/version"
 require "rack-flash"
 require "bcrypt"
 require "sinatra/base"
-require "sinatra/videoman/models/video"
+require "sinatra/activerecord"
+require "carrierwave"
 
 module Sinatra
   module Videoman
     module Manager
       @@config = {
-        :upload_dir => ""
+        :upload_dir => "",
+        :content_types => ""
       }
+
       @@callbacks = {}
 
       def self.config &block
@@ -40,4 +43,5 @@ module Sinatra
   end
 end
 
-require "sinatra/videoman/middleware.rb"
+require "sinatra/videoman/middleware"
+require "sinatra/videoman/models/video"
