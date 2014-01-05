@@ -1,9 +1,27 @@
+<script type='text/javascript'>
+  function addFields(){
+    // Container <div> where dynamic content will be placed
+    var container = document.getElementById("video_input_fields");
+    // Append a node with a random text
+    container.appendChild(document.createTextNode("Video:"));
+    // Create an <input> element, set its type and name attributes
+    var input = document.createElement("input");
+    input.type = "file";
+    input.name = "video_file[]";
+    input.setAttribute("class", "video_input");
+    container.appendChild(input);
+    // Append a line break
+    container.appendChild(document.createElement("br"));
+  }
+</script>
 <%= flash[:error] %>
 <%= flash[:notice] %>
-<form enctype="multipart/form-data" method="post" action="/videos/upload">
-  <p>Video: <input type="file" name="video" /></p>
-  <p>Title: <input type="text" name="title" /></p>
-  <p>Description: <input type="text" name="description" /></p>
-  <p>Tags: <input type="text" name="tags" /></p>
+<form id="video_form" enctype="multipart/form-data" method="post" action="/videos/upload">
+  <div id="video_input_fields">
+    <input type="file" name="video_file[]" />
+  </div>
+  <p>Title: <input type="text" name="video[title]" /></p>
+  <p>Description: <input type="text" name="video[description]" /></p>
   <input type="submit" value="Upload" />
+  <input type="button" onclick="addFields()" />
 </form>

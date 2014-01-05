@@ -8,11 +8,11 @@ module Sinatra
       end
 
       post '/videos/upload' do
-        video_upload = Video.new(params)
-        video_upload.video = params[:video]
-        if video_upload.valid?
-          video_upload.save!
-          Manager.call :after_upload, [video_upload, request, response]
+        video_file = VideoFile.new(params)
+        video_file.video = params[:video]
+        if video_file.valid?
+          video_file.save!
+          Manager.call :after_upload, [video_file, request, response]
           flash[:notice] = Manager._after_upload_msg
           redirect Manager._after_upload_path
         else

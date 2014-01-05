@@ -9,9 +9,13 @@ module Sinatra
   module Videoman
     module Manager
       @@config = {
-        :upload_dir => nil,
-        :file_extensions => %w(ogv webm mp4),
-        :max_file_size => 400
+        :video_upload_dir => nil,
+        :video_file_extensions => %w(ogv webm mp4),
+        :max_video_file_size => 400,
+
+        :thumb_upload_dir => nil,
+        :thumb_file_extensions => %w(jpg jpeg bmp),
+        :max_thumb_file_size => 2,
       }
       @@callbacks = {}
 
@@ -133,5 +137,5 @@ module Sinatra
 end
 
 require "sinatra/videoman/middleware.rb"
-require "sinatra/videoman/uploader.rb"
 require "sinatra/videoman/models/video.rb"
+require "sinatra/videoman/models/video_file.rb"

@@ -1,17 +1,17 @@
+
 require 'digest/sha1'
 
-class VideoUploader < CarrierWave::Uploader::Base
+class ThumbUploader < CarrierWave::Uploader::Base
   include Sinatra::Videoman
 
   storage :file
 
-
   def store_dir
-    Manager.config[:upload_dir]
+    Manager.config[:thumb_upload_dir]
   end
 
   def extension_white_list
-    Manager.config[:file_extensions]
+    Manager.config[:thumb_file_extensions]
   end
 
   def filename
