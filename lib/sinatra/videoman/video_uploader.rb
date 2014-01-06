@@ -2,7 +2,6 @@ require 'digest/sha1'
 
 class VideoUploader < CarrierWave::Uploader::Base
   include Sinatra::Videoman
-
   storage :file
 
   def store_dir

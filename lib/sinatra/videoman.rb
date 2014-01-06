@@ -16,21 +16,18 @@ module Sinatra
         :thumb_upload_dir => nil,
         :thumb_file_extensions => %w(jpg jpeg bmp),
         :max_thumb_file_size => 2,
+
+        :after_video_save_path => '/',
+        :after_video_save_msg => 'Successfully uploaded video!',
+
+        :after_update_path => '/',
+        :after_update_msg => 'Successfully updated video!',
+
+        :after_delete_path => '/',
+        :after_delete_msg => 'Successfully deleted video!',
       }
       @@callbacks = {}
 
-      @@_after_upload_path = '/'
-      @@_after_upload_msg = 'Successfully uploaded video!'
-      @@_after_upload_failure_path = '/'
-      @@_after_upload_failure_msg = 'Failed to upload video!'
-
-      @@_after_update_path = '/'
-      @@_after_update_msg = 'Successfully updated video!'
-      @@_after_update_failure_path = '/'
-      @@_after_update_failure_msg = 'Failed to update video!'
-
-      @@_after_delete_path = '/'
-      @@_after_delete_msg = 'Successfully deleted video!'
 
       def self.config &block
         yield(@@config) if block_given?
@@ -57,12 +54,20 @@ module Sinatra
         end
       end
 
-      def self.after_upload &block
-        self.register :after_upload, &block
+      def self.after_file_upload &block
+        self.register :after_file_upload, &block
       end
 
-      def self.after_upload_failure &block
-        self.register :after_upload_failure, &block
+      def self.after_file_upload_failure &block
+        self.register :after_file_upload_failure, &block
+      end
+
+      def self.after_video_save &block
+        self.register :after_video_save, &block
+      end
+
+      def self.after_video_save_failure &block
+        self.register :after_video_save_failure, &block
       end
 
       def self.after_update &block
@@ -79,58 +84,6 @@ module Sinatra
 
       def self.after_delete &block
         self.register :after_delete, &block
-      end
-
-      def self.after_upload_path path, msg
-        @@_after_upload_path, @@_after_upload_msg = path, msg
-      end
-
-      def self.after_upload_failure_path path, msg
-        @@_after_upload_failure_path, @@_after_upload_failure_msg = path, msg
-      end
-
-      def self._after_upload_path
-        @@_after_upload_path
-      end
-
-      def self._after_upload_failure_path
-        @@_after_upload_failure_path
-      end
-
-      def self._after_upload_msg
-        @@_after_upload_msg
-      end
-
-      def self._after_upload_failure_msg
-        @@_after_upload_failure_msg
-      end
-
-      def self.after_update_path path, msg
-        @@_after_update_path, @@_after_update_msg = path, msg
-      end
-
-      def self.after_update_failure_path path, msg
-        @@_after_update_failure_path, @@_after_update_failure_msg = path, msg
-      end
-
-      def self._after_update_path
-        @@_after_update_path
-      end
-
-      def self._after_update_failure_path
-        @@_after_update_failure_path
-      end
-
-      def self.after_delete_path path, msg
-        @@_after_delete_path, @@_after_delete_msg = path, msg
-      end
-
-      def self._after_delete_path
-        @@_after_delete_path
-      end
-
-      def self._after_delete_msg
-        @@_after_delete_msg
       end
     end
   end

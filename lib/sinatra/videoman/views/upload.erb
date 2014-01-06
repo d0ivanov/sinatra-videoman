@@ -7,21 +7,19 @@
     // Create an <input> element, set its type and name attributes
     var input = document.createElement("input");
     input.type = "file";
-    input.name = "video_file[]";
-    input.setAttribute("class", "video_input");
+    input.name = "video_files[]";
     container.appendChild(input);
-    // Append a line break
-    container.appendChild(document.createElement("br"));
   }
 </script>
 <%= flash[:error] %>
 <%= flash[:notice] %>
 <form id="video_form" enctype="multipart/form-data" method="post" action="/videos/upload">
   <div id="video_input_fields">
-    <input type="file" name="video_file[]" />
+    <input type="file" name="video_files[]" /><br />
   </div>
   <p>Title: <input type="text" name="video[title]" /></p>
   <p>Description: <input type="text" name="video[description]" /></p>
+  <p>Thumbnail: <input type="file" name="video[thumbnail]" /></p>
   <input type="submit" value="Upload" />
-  <input type="button" onclick="addFields()" />
+  <input type="button" value="Add file" onclick="addFields()" />
 </form>

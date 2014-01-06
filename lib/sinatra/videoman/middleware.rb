@@ -8,17 +8,28 @@ module Sinatra
       end
 
       post '/videos/upload' do
-        video_file = VideoFile.new(params)
-        video_file.video = params[:video]
-        if video_file.valid?
-          video_file.save!
-          Manager.call :after_upload, [video_file, request, response]
-          flash[:notice] = Manager._after_upload_msg
-          redirect Manager._after_upload_path
+        video = Video.new(params[:video])
+        params[:video_files].each do |file|
+          file = VideoFile.new(:file => file, :content_type => file[:type])
+          if file.valid?
+            video.video_files << file
+            file.save!
+            Manager.call :after_file_upload, [file]
+          else
+            Manager.call :after_file_upload_failure, [request, response]
+            flash[:error] = file.errors.messages
+            redirect '/videos/upload'
+          end
+        end
+        if video.valid? && video.video_files.size >= 1
+          video.save!
+          Manager.call :after_video_save, [video, request, response]
+          flash[:notice] = Manager.config[:after_video_save_msg]
+          redirect Manager.config[:after_video_save_path]
         else
-          Manager.call :after_upload_failure, [request, response]
-          flash[:error] = Manager._after_upload_failure_msg
-          redirect Manager._after_upload_failure_path
+          Manager.call :after_video_save_failure, [request, response]
+          flash[:error] = video.errors.messages
+          redirect '/videos/upload'
         end
       end
 
@@ -38,12 +49,12 @@ module Sinatra
         if video.valid?
           video.save
           Manager.call :after_update, [video, request, response]
-          flash[:notice] = Manager._after_update_msg
-          redirect Manager._after_update_path
+          flash[:notice] = Manager.config[:after_update_msg]
+          redirect Manager.config[:after_update_path]
         else
           Manager.call :after_update_failure, [video, request, response]
-          flash[:error] = Manager._after_update_failure_msg
-          redirect Manager._after_update_failure_path
+          flash[:error] = video.errors.messages
+          redirect Manager.config[:after_update_failure_path]
         end
       end
 
@@ -54,9 +65,9 @@ module Sinatra
           video.video.remove!
           video.delete
           Manager.call :after_delete, [request, response]
-          flash[:notice] = Manager._after_delete_msg
+          flash[:notice] = Manager.config[:after_delete_msg]
         end
-        redirect Manager._after_delete_path
+        redirect Manager.config[:after_delete_path]
       end
 
       get '/videos/' do
