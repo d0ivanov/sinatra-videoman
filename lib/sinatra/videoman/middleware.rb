@@ -1,7 +1,11 @@
+require 'sinatra/partial'
+
 module Sinatra
   module Videoman
     class Middleware < Sinatra::Base
       include Manager
+      register Sinatra::Partial
+      set :partial_template_engine, :erb
 
       get '/videos/upload/?' do
         erb :upload
@@ -48,26 +52,27 @@ module Sinatra
         video.update_atributes(params)
         if video.valid?
           video.save
-          Manager.call :after_update, [video, request, response]
-          flash[:notice] = Manager.config[:after_update_msg]
-          redirect Manager.config[:after_update_path]
+          Manager.call :after_video_update, [video, request, response]
+          flash[:notice] = Manager.config[:after_video_update_msg]
+          redirect Manager.config[:after_video_update_path]
         else
-          Manager.call :after_update_failure, [video, request, response]
+          Manager.call :after_video_update_failure, [video, request, response]
           flash[:error] = video.errors.messages
-          redirect Manager.config[:after_update_failure_path]
+          redirect Manager.config[:after_video_update_failure_path]
         end
       end
 
       post '/videos/delete/:id' do
         video = Video.find(params[:id])
-        Manager.call :before_delete, [video, request, response]
+        Manager.call :before_video_delete, [video, request, response]
         if video
-          video.video.remove!
+          video.thumbnail.remove!
+          video.video_files.each {|file| file.file.remove!}
           video.delete
-          Manager.call :after_delete, [request, response]
-          flash[:notice] = Manager.config[:after_delete_msg]
+          Manager.call :after_video_delete, [request, response]
+          flash[:notice] = Manager.config[:after_video_delete_msg]
         end
-        redirect Manager.config[:after_delete_path]
+        redirect Manager.config[:after_video_delete_path]
       end
 
       get '/videos/' do

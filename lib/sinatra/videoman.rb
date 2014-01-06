@@ -20,11 +20,12 @@ module Sinatra
         :after_video_save_path => '/',
         :after_video_save_msg => 'Successfully uploaded video!',
 
-        :after_update_path => '/',
-        :after_update_msg => 'Successfully updated video!',
+        :after_video_update_path => '/',
+        :after_video_update_msg => 'Successfully updated video!',
+        :after_video_update_failure_path => '/',
 
-        :after_delete_path => '/',
-        :after_delete_msg => 'Successfully deleted video!',
+        :after_video_delete_path => '/',
+        :after_video_delete_msg => 'Successfully deleted video!',
       }
       @@callbacks = {}
 
@@ -70,20 +71,20 @@ module Sinatra
         self.register :after_video_save_failure, &block
       end
 
-      def self.after_update &block
-        self.register :after_update, &block
+      def self.after_video_update &block
+        self.register :after_video_update, &block
       end
 
-      def self.after_update_failure &block
-        self.register :after_update_failure, &block
+      def self.after_video_update_failure &block
+        self.register :after_video_update_failure, &block
       end
 
-      def self.before_delete &block
-        self.register :after_delete, &block
+      def self.before_video_delete &block
+        self.register :before_video_delete, &block
       end
 
-      def self.after_delete &block
-        self.register :after_delete, &block
+      def self.after_video_delete &block
+        self.register :after_video_delete, &block
       end
     end
   end

@@ -1,36 +1,37 @@
 <script type='text/javascript'>
   function addFields(){
-    // Container <div> where dynamic content will be placed
-    var container = document.getElementById("video_input_fields");
-    // Append a node with a random text
+    var container = document.getElementById("video_files");
     container.appendChild(document.createTextNode("Video: "));
-    // Create an <input> element, set its type and name attributes
     var input = document.createElement("input");
     input.type = "file";
     input.name = "video_files[]";
     container.appendChild(input);
-    // Append a line break
     container.appendChild(document.createElement("br"));
   }
 </script>
 <%= flash[:error] %>
 <%= flash[:notice] %>
 <form id="video_form" enctype="multipart/form-data" method="post" action="/videos/upload">
-  <fieldset id="video_input_fields">
+  <fieldset id="video_files">
     <legend>Video files</legend>
-    <label for="file">Video:</label>
-    <input id="file" type="file" name="video_files[]" required /></br>
+    Video: <input type="file" name="video_files[]" required /></br>
   </fieldset>
-
-  <label for="title">Title:</label>
-  <input id="title" type="text" name="video[title]" placeholder="Video title" required /><br />
-
-  <label for="description">Description:</label>
-  <input id="description" type="text" name="video[description]" placeholder="Video description" required /><br />
-
-  <label for="thumbnail">Thumbnail:</label>
-  <input id="thumbnail" type="file" name="video[thumbnail]" required /><br />
-
-  <input type="submit" value="Upload" />
-  <input type="button" value="Add file" onclick="addFields()" />
+  <table border="0">
+    <tr>
+      <td><label for="title">Title:</label></td>
+      <td><input id="title" type="text" name="video[title]" placeholder="Video title" required /></td>
+    </tr>
+    <tr>
+      <td><label for="description">Description:</label></td>
+      <td><input id="description" type="text" name="video[description]" placeholder="Video description" required /></td>
+    </tr>
+    <tr>
+      <td><label for="thumbnail">Thumbnail:</label></td>
+      <td><input id="thumbnail" type="file" name="video[thumbnail]" required /></td>
+    </tr>
+    <tr>
+      <td><input type="submit" value="Upload" /></td>
+      <td><input type="button" value="Add file" onclick="addFields()" /></td>
+    </tr>
+  </table>
 </form>
