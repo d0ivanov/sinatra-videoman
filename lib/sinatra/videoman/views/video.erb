@@ -1,5 +1,5 @@
 <h3><%= video.title %></h3>
-<video width="320" height="240" controls>
+<video width="640" height="360" controls>
   <% video.video_files.each do |source| %>
     <source src=<%= source.file.url %> type=<%= source.content_type %> />
   <% end %>

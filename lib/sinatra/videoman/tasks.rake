@@ -1,8 +1,8 @@
 require 'rake'
 
-namespace :views do
+namespace :video_views do
   desc 'Copy view files'
-  task :instal do
+  task :install do
     Sinatra::Videoman::Tasks.install_views_task ENV["VIEWS_DIR"]
   end
 end

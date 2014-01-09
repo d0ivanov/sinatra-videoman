@@ -7,7 +7,7 @@ module Sinatra
         app.set :partial_template_engine, :erb
 
         app.get '/videos/upload/?' do
-          erb :upload
+          erb 'videos/upload'.to_sym
         end
 
         app.post '/videos/upload' do
@@ -36,10 +36,10 @@ module Sinatra
           end
         end
 
-        app.get '/videos/show/:id/?' do
+        app.get '/videos/watch/:id/?' do
           @video = Video.find_by id: params[:id]
           if @video
-            erb :show
+            erb 'videos/watch'.to_sym
           else
             'No video found'
           end
@@ -48,7 +48,7 @@ module Sinatra
         app.get '/videos/edit/:id/?' do
           @video = Video.find_by id: params[:id]
           if @video
-            erb :edit
+            erb 'videos/edit'.to_sym
           else
             'No video found'
           end
@@ -85,8 +85,8 @@ module Sinatra
         end
 
         app.get '/videos/?' do
-          @videos = Video.all
-          erb :index
+          @video_links = Video.all
+          erb 'videos/list'.to_sym
         end
       end
     end
