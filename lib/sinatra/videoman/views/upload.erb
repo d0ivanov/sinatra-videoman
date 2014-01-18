@@ -13,25 +13,25 @@
 <%= flash[:notice] %>
 <form id="video_form" enctype="multipart/form-data" method="post" action="/videos/upload">
   <fieldset id="video_files">
-    <legend>Video files</legend>
-    Video: <input type="file" name="video_files[]" required /></br>
+    <legend><%= I18n.t 'video_files' %></legend>
+    <%= I18n.t 'video' %>: <input type="file" name="video_files[]" required /></br>
   </fieldset>
   <table border="0">
     <tr>
-      <td><label for="title">Title:</label></td>
+      <td><label for="title"><%= I18n.t 'title' %>:</label></td>
       <td><input id="title" type="text" name="video[title]" placeholder="Video title" required /></td>
     </tr>
     <tr>
-      <td><label for="description">Description:</label></td>
+      <td><label for="description"><%= I18n.t 'description' %>:</label></td>
       <td><input id="description" type="text" name="video[description]" placeholder="Video description" required /></td>
     </tr>
     <tr>
-      <td><label for="thumbnail">Thumbnail:</label></td>
+      <td><label for="thumbnail"><%= I18n.t 'thumbnail' %>:</label></td>
       <td><input id="thumbnail" type="file" name="video[thumbnail]" required /></td>
     </tr>
     <tr>
-      <td><input type="submit" value="Upload" /></td>
-      <td><input type="button" value="Add file" onclick="addFields()" /></td>
+      <td><input type="submit" value=<%= I18n.t 'upload' %> /></td>
+      <td><input type="button" value=<%= I18n.t 'add_field' %> onclick="addFields()" /></td>
     </tr>
   </table>
 </form>

@@ -27,7 +27,7 @@ module Sinatra
           if video.valid? && video.video_files.size >= 1
             video.save!
             Manager.call :after_video_save, [video, request, response]
-            flash[:notice] = Manager.config[:after_video_save_msg]
+            flash[:notice] = I18n.t 'video_uploaded'
             redirect Manager.config[:after_video_save_path]
           else
             Manager.call :after_video_save_failure, [request, response]
@@ -41,7 +41,7 @@ module Sinatra
           if @video
             erb 'videos/watch'.to_sym
           else
-            'No video found'
+            I18n.t 'video_not_found'
           end
         end
 
@@ -50,7 +50,7 @@ module Sinatra
           if @video
             erb 'videos/edit'.to_sym
           else
-            'No video found'
+            I18n.t 'video_not_found'
           end
         end
 
@@ -59,12 +59,12 @@ module Sinatra
           if video.update_attributes(params)
             video.save
             Manager.call :after_video_update, [video, request, response]
-            flash[:notice] = Manager.config[:after_video_update_msg]
+            flash[:notice] = I18n.t 'video_edited'
             redirect Manager.config[:after_video_update_path]
           else
             Manager.call :after_video_update_failure, [video, request, response]
             flash[:error] = video.errors.messages
-            redirect Manager.config[:after_video_update_failure_path]
+            redirect "/videos/edit/#{video.id}"
           end
         end
 
@@ -79,7 +79,7 @@ module Sinatra
             end
             video.destroy!
             Manager.call :after_video_delete, [request, response]
-            flash[:notice] = Manager.config[:after_video_delete_msg]
+            flash[:notice] = I18n.t 'video_deleted'
           end
           redirect Manager.config[:after_video_delete_path]
         end

@@ -4,11 +4,14 @@ require "bcrypt"
 require "sinatra/base"
 require "active_record"
 require "carrierwave"
+require "i18n"
 
 module Sinatra
   module Videoman
     module Manager
       @@config = {
+        :locales_dir => nil,
+
         :video_upload_dir => nil,
         :video_file_extensions => %w(ogv webm mp4),
         :max_video_file_size => 400,
@@ -18,14 +21,8 @@ module Sinatra
         :max_thumb_file_size => 2,
 
         :after_video_save_path => '/',
-        :after_video_save_msg => 'Successfully uploaded video!',
-
         :after_video_update_path => '/',
-        :after_video_update_msg => 'Successfully updated video!',
-        :after_video_update_failure_path => '/',
-
         :after_video_delete_path => '/',
-        :after_video_delete_msg => 'Successfully deleted video!',
       }
       @@callbacks = {}
 
@@ -87,6 +84,9 @@ module Sinatra
         self.register :after_video_delete, &block
       end
     end
+    I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
+    I18n.load_path, Dir[File.join(Manager.config[:locales_dir], '*.yml')]
+    I18n.backend.load_translations
   end
 end
 

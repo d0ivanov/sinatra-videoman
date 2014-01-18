@@ -6,6 +6,9 @@ require 'sinatra/videoman/thumb_uploader.rb'
 
 class Video < ActiveRecord::Base
   include Sinatra::Videoman
+
+  attr_accessible :title, :description, :thumbnail
+
   mount_uploader :thumbnail, ThumbUploader
   has_many :video_files
 

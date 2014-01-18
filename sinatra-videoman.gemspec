@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
 	spec.add_runtime_dependency "protected_attributes"
   spec.add_runtime_dependency "bcrypt-ruby"
   spec.add_runtime_dependency "carrierwave"
+  spec.add_runtime_dependency "i18n"
 end

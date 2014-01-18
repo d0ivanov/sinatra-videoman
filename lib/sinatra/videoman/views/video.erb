@@ -3,7 +3,7 @@
   <% video.video_files.each do |source| %>
     <source src=<%= source.file.url %> type=<%= source.content_type %> />
   <% end %>
-    Your browser does not support the video tag.
+    <%= I18n.t 'video_tag_not_supported' %>
 </video>
 <div id="description">
   <%= video.description %>

@@ -1,0 +1,6 @@
+<form method="post" action="/videos/edit/<%= @video.id %>">
+  <p><%= I18n.t 'title' %>: <input type="text" value=<%= @video.title %> name="title" /></p>
+  <p><%= I18n.t 'description' %>: <input type="text" value=<%= @video.description %> name="description" /></p>
+  <p><%= I18n.t 'thumbnail' %>: <input type="file" value=<%= @video.thumbnail.url%> name="thumbnail" /></p>
+  <input type="submit" value=<%= I18n.t 'submit' %> />
+</form>
