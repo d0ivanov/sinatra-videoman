@@ -11,7 +11,7 @@ module Sinatra
   module Videoman
     module Manager
       @@config = {
-        :locales_dir => 'locales',
+        :default_locale => :en,
 
         :video_upload_dir => nil,
         :video_file_extensions => %w(ogv webm mp4),
@@ -85,9 +85,6 @@ module Sinatra
         self.register :after_video_delete, &block
       end
     end
-    I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
-    I18n.load_path = Dir[File.join(Manager.config[:locales_dir], '*.yml')]
-    I18n.backend.load_translations
   end
 end
 

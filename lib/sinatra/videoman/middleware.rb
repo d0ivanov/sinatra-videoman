@@ -7,7 +7,7 @@ module Sinatra
       I18n.load_path = Dir[File.join(File.dirname(__FILE__)+'/locales', '*.yml')]
       I18n.backend.load_translations
       I18n.enforce_available_locales = true
-      I18n.default_locale = settings.locales[:default_locale]
+      I18n.default_locale = Manager.config[:default_locale]
 
       def self.registered(app)
         app.register Sinatra::Partial
