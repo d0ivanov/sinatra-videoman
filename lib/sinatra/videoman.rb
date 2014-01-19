@@ -12,9 +12,6 @@ module Sinatra
     module Manager
       @@config = {
         :default_locale => :en,
-        #If nil locales are loaded from the gem's locale files
-        #else locales loaded from the location set
-        :locales_dir => nil,
 
         :video_upload_dir => nil,
         :video_file_extensions => %w(ogv webm mp4),
