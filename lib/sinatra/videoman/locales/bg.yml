@@ -1,0 +1,14 @@
+en:
+  title: Заглавие
+  description: Описание
+  thumbnail: Миниатюра
+  submit: Изпращане
+  upload: Качване
+  video_files: Видео Файлове
+  video: Видео
+  add_field: Добавяна на полета
+  video_tag_unsupported: Браузърът ви не поддържа HTML5 видеа.
+  vide_not_found: Видеото не беше намерено!
+  video_deleted: Видеото изтрито успешно!
+  video_uploaded: Видеото качено успешно!
+  video_edited: Видеото обновено успешно!

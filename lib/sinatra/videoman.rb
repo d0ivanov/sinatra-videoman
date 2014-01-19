@@ -5,12 +5,13 @@ require "sinatra/base"
 require "active_record"
 require "carrierwave"
 require "i18n"
+require "i18n/backend/fallbacks"
 
 module Sinatra
   module Videoman
     module Manager
       @@config = {
-        :locales_dir => nil,
+        :locales_dir => 'locales',
 
         :video_upload_dir => nil,
         :video_file_extensions => %w(ogv webm mp4),
@@ -85,7 +86,7 @@ module Sinatra
       end
     end
     I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
-    I18n.load_path, Dir[File.join(Manager.config[:locales_dir], '*.yml')]
+    I18n.load_path = Dir[File.join(Manager.config[:locales_dir], '*.yml')]
     I18n.backend.load_translations
   end
 end

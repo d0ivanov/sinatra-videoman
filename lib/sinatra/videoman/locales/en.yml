@@ -1,0 +1,14 @@
+en:
+  title: Title
+  description: Description
+  thumbnail: Thumbnail
+  submit: Submit
+  upload: Upload
+  video_files: Video Files
+  video: Video
+  add_field: Add Fields
+  video_tag_unsupported: Your browser does not support video tags.
+  vide_not_found: Could not find the video you are looking for!
+  video_deleted: Successfully deleted video!
+  video_updated: Successfully uploaded video!
+  video_edited: Successfully edited video!
