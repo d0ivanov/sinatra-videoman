@@ -1,5 +1,5 @@
 require "sinatra/videoman/version"
-require "rack-flash"
+require "sinatra/flash"
 require "bcrypt"
 require "sinatra/base"
 require "active_record"

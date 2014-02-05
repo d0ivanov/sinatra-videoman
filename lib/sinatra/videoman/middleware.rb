@@ -44,7 +44,7 @@ module Sinatra
         end
 
         app.get '/videos/watch/:id/?' do
-          @video = Video.find_by id: params[:id]
+          @video = Video.find_by(id: params[:id])
           if @video
             erb 'videos/watch'.to_sym
           else
@@ -53,7 +53,7 @@ module Sinatra
         end
 
         app.get '/videos/edit/:id/?' do
-          @video = Video.find_by id: params[:id]
+          @video = Video.find_by(id: params[:id])
           if @video
             erb 'videos/edit'.to_sym
           else
@@ -76,7 +76,7 @@ module Sinatra
         end
 
         app.post '/videos/delete/:id' do
-          video = Video.find_by id: params[:id]
+          video = Video.find_by(id: params[:id])
           if video
             Manager.call :before_video_delete, [video, request, response]
             video.thumbnail.remove!
