@@ -8,9 +8,11 @@ module Sinatra
         Dir.foreach(current_path + '/views') do |item|
           next if item == '.' or item == '..'
           File.open(File.join(current_path, 'views', item), 'r') do |file|
-            File.open(File.join(views_dir, item), 'w') do |view|
-              while line = file.gets
-                view.write line
+            if !File.exists?(File.join(views_dir, item))
+              File.open(File.join(views_dir, item), 'w') do |view|
+                while line = file.gets
+                  view.write line
+                end
               end
             end
           end
