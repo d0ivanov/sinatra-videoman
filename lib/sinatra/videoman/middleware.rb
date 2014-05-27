@@ -63,8 +63,8 @@ module Sinatra
 
         app.post '/videos/edit/:id' do
           video = Video.find(params[:id])
-          if video.update_attributes(params)
-            video.save
+          if video.update_attributes(params[:video])
+            video.save!
             Manager.call :after_video_update, [video, request, response]
             flash[:notice] = I18n.t 'video_edited'
             redirect Manager.config[:after_video_update_path]
